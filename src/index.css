@@ -1,0 +1,46 @@
+@font-face {
+    font-family: "digital_7_mono";
+    src: url("assets/digital_7_mono.ttf");
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    overflow: hidden;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+}
+
+#timer-container {
+    position: relative;
+    width: 400px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    --webkit-app-region: no-drag;
+}
+
+.lcdfont {
+    font-family: "digital_7_mono";
+    font-size: 120px;
+    position: absolute;
+    letter-spacing: 5px;
+}
+
+#timer {
+    color: rgba(255, 0, 0, 0.95);
+    text-shadow:
+        0 0 10px rgba(255, 0, 0, 0.7),
+        0 0 20px rgba(255, 0, 0, 0.5);
+    z-index: 2;
+}
+
+#timerBG {
+    color: rgba(51, 0, 0, 0.2);
+    z-index: 1;
+}

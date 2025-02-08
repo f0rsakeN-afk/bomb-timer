@@ -1,0 +1,54 @@
+{
+  "name": "bomb",
+  "version": "1.0.0",
+  "description": "Bomb Timer Overlay",
+  "main": "main.js",
+  "homepage": "https://github.com/f0rsakeN-afk/bomb",
+  "author": {
+    "name": "f0rsakeN-afk",
+    "email": "nar3sh0@gmail.com"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.bomb.timer",
+    "productName": "Bomb Timer",
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "category": "Utility",
+      "maintainer": "f0rsakeN-afk <nar3sh0@gmail.com>",
+      "executableName": "bomb",
+      "desktop": {
+        "Name": "Bomb Timer",
+        "Type": "Application",
+        "Terminal": "false"
+      }
+    },
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "extraResources": [
+      {
+        "from": "src/assets",
+        "to": "assets"
+      }
+    ],
+    "asar": false
+  },
+  "devDependencies": {
+    "electron": "^34.1.1",
+    "electron-builder": "^24.6.4",
+    "@electron/remote": "^2.0.12"
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.12"
+  }
+}
