@@ -1,54 +1,60 @@
 {
   "name": "bomb",
-  "version": "1.0.0",
-  "description": "Bomb Timer Overlay",
-  "main": "main.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "homepage": "https://github.com/f0rsakeN-afk/bomb",
   "author": {
     "name": "f0rsakeN-afk",
     "email": "nar3sh0@gmail.com"
   },
   "scripts": {
-    "start": "electron .",
-    "build": "electron-builder --linux"
+    "dev": "vite",
+    "build": "tsc && vite build && electron-builder --linux",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "clean": "rm -rf dist dist-electron"
   },
   "build": {
     "appId": "com.bomb.timer",
     "productName": "Bomb Timer",
     "linux": {
       "target": [
-        "deb"
+        "deb",
+        "AppImage"
       ],
       "category": "Utility",
       "maintainer": "f0rsakeN-afk <nar3sh0@gmail.com>",
-      "executableName": "bomb",
-      "desktop": {
-        "Name": "Bomb Timer",
-        "Type": "Application",
-        "Terminal": "false"
-      }
+      "icon": "public/icons"
     },
     "files": [
-      "**/*"
+      "dist/**/*",
+      "dist-electron/**/*"
     ],
     "directories": {
-      "output": "dist",
-      "buildResources": "build"
-    },
-    "extraResources": [
-      {
-        "from": "src/assets",
-        "to": "assets"
-      }
-    ],
-    "asar": false
-  },
-  "devDependencies": {
-    "electron": "^34.1.1",
-    "electron-builder": "^24.6.4",
-    "@electron/remote": "^2.0.12"
+      "output": "release"
+    }
   },
   "dependencies": {
-    "@electron/remote": "^2.0.12"
-  }
+    "motion": "^12.4.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^30.0.1",
+    "electron-builder": "^24.13.3",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-plugin-electron": "^0.28.6",
+    "vite-plugin-electron-renderer": "^0.14.5"
+  },
+  "main": "dist-electron/main.js"
 }

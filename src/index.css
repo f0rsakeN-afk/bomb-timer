@@ -1,46 +1,59 @@
-@font-face {
-    font-family: "digital_7_mono";
-    src: url("assets/digital_7_mono.ttf");
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 body {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    overflow: hidden;
-    -webkit-app-region: drag;
-    -webkit-user-select: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
 }
 
-#timer-container {
-    position: relative;
-    width: 400px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    --webkit-app-region: no-drag;
+.timer-container {
+  position: relative;
+  width: 400px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-app-region: drag;
 }
 
-.lcdfont {
-    font-family: "digital_7_mono";
-    font-size: 120px;
-    position: absolute;
-    letter-spacing: 5px;
+.timer-display {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#timer {
-    color: rgba(255, 0, 0, 0.95);
-    text-shadow:
-        0 0 10px rgba(255, 0, 0, 0.7),
-        0 0 20px rgba(255, 0, 0, 0.5);
-    z-index: 2;
+.timer, .timer-bg {
+  font-family: 'digital_7_mono';
+  font-size: 120px;
+  position: absolute;
+  letter-spacing: 5px;
+  transition: color 0.3s ease;
 }
 
-#timerBG {
-    color: rgba(51, 0, 0, 0.2);
-    z-index: 1;
+.timer {
+  color: rgba(255, 0, 0, 0.95);
+  text-shadow:
+    0 0 10px rgba(255, 0, 0, 0.7),
+    0 0 20px rgba(255, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.timer-bg {
+  color: rgba(51, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Optional: Add subtle animation for running state */
+@keyframes pulse {
+  0% { opacity: 0.95; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.95; }
+}
+
+.timer:not(.input-mode) {
+  animation: pulse 2s ease-in-out infinite;
 }
