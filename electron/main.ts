@@ -24,6 +24,7 @@ function createWindow() {
     transparent: true,
     alwaysOnTop: true,
     maximizable: false,
+    backgroundColor: "#00000000",
     focusable: true,
     skipTaskbar: true,
     icon: path.join(__dirname, "../public/icons/icon.png"),

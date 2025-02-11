@@ -1,36 +1,44 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
+import ak47 from './assets/AK47_Fire1.wav';
+import explode from './assets/explode.wav';
+import beep from './assets/beep.wav';
+import doubleBeep from './assets/doublebeep.wav';
+import arm from './assets/armbomb.wav';
+
 
 function App() {
-  const [time, setTime] = useState({ minutes: 30, seconds: 0 });
+  const [time, setTime] = useState({ minutes: 0, seconds: 10 });
   const [isRunning, setIsRunning] = useState(false);
   const [inputMode, setInputMode] = useState(false);
   const [inputValue, setInputValue] = useState("02:00");
 
-  const playAudio = (filename: string) => {
-    try {
-      const audio = new Audio(`/sounds/${filename}`);
-      audio.volume = 0.5;
-      audio.play().catch(console.error);
-    } catch (error) {
-      console.error("Audio error:", error);
-    }
-  };
+  const playAudio = (audioFile: string) => {
+    const audio = new Audio(audioFile);
+    audio.volume = 1;
+    audio.play().catch(console.error);
+  }
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>
 
     if (isRunning) {
+      playAudio(ak47);
+
       interval = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime.minutes === 0 && prevTime.seconds === 0) {
             setIsRunning(false);
-            playAudio("explode.wav");
+            playAudio(explode);
             return prevTime;
           }
 
+          if (prevTime.minutes === 0 && prevTime.seconds <= 59 && prevTime.seconds >= 11) {
+            playAudio(beep);
+          }
+
           if (prevTime.minutes === 0 && prevTime.seconds <= 10) {
-            playAudio("beep.wav");
+            playAudio(doubleBeep);
           }
 
           if (prevTime.seconds === 0) {
@@ -56,10 +64,7 @@ function App() {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.code === "Space") {
       e.preventDefault();
-      if (!inputMode) {
-        if (!isRunning) playAudio("armbomb.wav");
-        setIsRunning((prev) => !prev);
-      }
+      setIsRunning((prev) => !prev);
     } else if (e.code === "Tab") {
       e.preventDefault();
       if (!isRunning) {
@@ -76,7 +81,6 @@ function App() {
         setInputValue((prev) => {
           let newValue = prev;
           if (prev.includes(":")) {
-            // Handling seconds input
             const [mins, secs] = prev.split(":");
             if (secs.length < 2) {
               newValue = `${mins}:${secs}${e.key}`;
@@ -84,7 +88,6 @@ function App() {
               if (seconds > 59) return prev;
             }
           } else {
-            // Handling minutes input
             if (prev.length < 2) {
               newValue = prev + e.key;
             }
@@ -107,6 +110,11 @@ function App() {
           const formattedSec = String(sec).padStart(2, "0");
           setTime({ minutes: min, seconds: sec });
           setInputValue(`${formattedMin}:${formattedSec}`);
+
+          // Only play arm sound if the input is complete (XX:XX format)
+          if (inputValue.includes(":") && inputValue.length === 5) {
+            playAudio(arm);
+          }
         }
         setInputMode(false);
       }
@@ -118,9 +126,8 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isRunning, inputMode, inputValue]);
 
-  // Format display time with leading zeros
   const displayTime = `${String(time.minutes).padStart(2, "0")}:${String(
-    time.seconds,
+    time.seconds
   ).padStart(2, "0")}`;
 
   return (
