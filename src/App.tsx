@@ -7,8 +7,8 @@ import doubleBeep from './assets/doublebeep.wav';
 import arm from './assets/armbomb.wav';
 
 
-function App() {
-  const [time, setTime] = useState({ minutes: 0, seconds: 10 });
+const App = () => {
+  const [time, setTime] = useState({ minutes: 45, seconds: 0 });
   const [isRunning, setIsRunning] = useState(false);
   const [inputMode, setInputMode] = useState(false);
   const [inputValue, setInputValue] = useState("02:00");
@@ -68,8 +68,8 @@ function App() {
     } else if (e.code === "Tab") {
       e.preventDefault();
       if (!isRunning) {
-        setTime({ minutes: 2, seconds: 0 });
-        setInputValue("02:00");
+        setTime({ minutes: 45, seconds: 0 });
+        setInputValue("45:00");
       }
     } else if (e.code === "Escape") {
       window.close();
